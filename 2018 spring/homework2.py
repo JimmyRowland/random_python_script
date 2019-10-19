@@ -5,13 +5,12 @@ from scipy import constants
 import matplotlib.pyplot as plt
 e=constants.value(u'elementary charge')
 g=constants.value(u'standard acceleration of gravity')
-p0=constants.value(u'standard atmosphere')
-RRR=constants.value(u'molar gas constant')
 rhoW=1000
 rhoMercury=13690
-Avogadro=6.022*10**23
+
 x = Symbol("x")
 y = Symbol("y")
+z = Symbol("z")
 Ke = (4*pi*constants.epsilon_0)**(-1)
 epsilon_0=constants.epsilon_0
 eMass=9.10938356 / 10**31
@@ -19,6 +18,252 @@ protonMass=1.6726219/10**27
 # Permeability=4*pi/10**7
 Permeability_air=constants.mu_0
 SPEED_OF_LIGHT=constants.c
+waterHeatOffusion=3.34*10**5
+waterHeatCapacity=4.186*10**3
+waterVapor=2.256*10**6
+Kcopper=385
+Ksteel=50.2
+p0=constants.value(u'standard atmosphere')
+gas_constant=constants.value('molar gas constant')
+boltzmann = constants.value('Boltzmann constant')
+Avogadro=6.022*10**23
+def char191():
+    n=2
+    T0=30+273.15
+    T1=110+273.15
+
+    dT=110-30
+    print(n*gas_constant*dT)
+# char191()
+def char186():
+    T0=17+273.15
+    m1=3.34/10**27
+    m2=5.34/10**26
+    print(solve((T0/m1-x/m2),x)[0]-273.15)
+# char186()
+def char185():
+    h=3.5
+    p=4.2*10**5
+    h0=1
+    p1=p/(4-2.9)*0.5
+    h1=2.9
+    print(solve((p+h*rhoW*g-p0-h0*rhoW*g-x**2/2*rhoW),x))
+    print(solve((p1 + h1 * rhoW * g - p0 - h0 * rhoW * g - x ** 2 / 2 * rhoW), x))
+    h3=2
+    p3=p/2*0.5
+    print(solve((p3 + h3 * rhoW * g - p0 - h0 * rhoW * g - x ** 2 / 2 * rhoW), x))
+    print(solve(((4-h)*p-y*(4-x),y+x*rhoW*g-p0-h0*rhoW*g),x,y))
+    print(solve(((4 - h) * p - y * (4 - h3), y + h3 * rhoW * g - p0 - h0 * rhoW * g-x**2/2*rhoW), x, y))
+    print(sqrt(2/rhoW*(p3-p0)+2*g*(h3-h0)))
+# char185()
+def char184():
+    p=1.5*p0
+    T=94
+    print(T-273.15)
+    density=p/gas_constant/T*Avogadro
+    print(density)
+    density1=p0/gas_constant/(22+273.15)*Avogadro
+    print(density1)
+
+# char184()
+def char183():
+    M=18/1000
+    cv=3*gas_constant/M
+    print(cv)
+# char183()
+def char1810000():
+    l=1.5
+    r=45/100
+    T=22+273.15
+    p=21*p0
+    M=32/1000
+    V=r**2*l*pi
+    n=p*V/gas_constant/T
+    m=n*M
+    print(n,m)
+# char1810000()
+
+def char181():
+    l=1.6
+    r=94/2/100
+    T0=26+273.15
+    p=21.5*p0
+    m=32/10**3
+    n=p*pi*r**2*l/gas_constant/T0
+    print(n)
+    print(n*m)
+    print(gas_constant)
+# char181()
+def char1712():
+    flowrate=0.6/60
+    T=18
+    V=120
+    A=15
+    print(solve((1800-waterHeatCapacity*flowrate*(x-T)),x))
+# char1812()
+def char1711():
+    m0=0.44
+    mice=0.095
+    T0=0
+    Ccopper=385
+    msteam=0.035
+    print(solve((-mice*waterHeatOffusion-mice*waterHeatCapacity*x-m0*Ccopper*x+msteam*waterVapor+waterHeatCapacity*(100-x)*msteam),x))
+    print(mice+msteam)
+# char1811()
+def char1710():
+    mice=29
+    T=17
+    T2=4
+    k=0.0108
+    a=0.55
+    b=0.85
+    h=0.55
+    A=2 * (a * b + a * h + b * h)
+    
+    print(A)
+    print(waterHeatCapacity*mice*6)
+    print(waterHeatOffusion * mice)
+    print(solve((waterHeatOffusion * mice + waterHeatCapacity * mice * T2 - 7 * 24 * 3600 * k * A * (T-T2) / x), x))
+
+    print(solve((waterHeatOffusion * mice - y * k * 2 * (
+                a * b + a * h + b * h) * T / x,waterHeatCapacity*mice*6-z*k*2*(a*b+a*h+b*h)*T/x,y+z-7*24*3600), x,y,z))
+
+
+# char1810()
+def char18100():
+    mice=22
+    k=0.0109
+    a=0.55
+    b=0.85
+    h=0.5
+    print(solve((waterHeatOffusion*mice+waterHeatCapacity*mice*6-7*24*3600*k*2*(a*b+a*h+b*h)*9/x),x))
+    print(solve((waterHeatOffusion * mice - y * k * 2 * (
+                a * b + a * h + b * h) * 15 / x,waterHeatCapacity*mice*6-z*k*2*(a*b+a*h+b*h)*9/x,y+z-7*24*3600), x,y,z))
+
+def char179():
+    n=3
+    dT=200
+    T0=27+273.15
+    T1=227+273.15
+    Q=(29.5*dT+8.2/10**3/2*(T1**2-T0**2))*n
+    print(Q)
+# char179()
+# char18100()
+def char178():
+    m=250
+    f=440
+    dT=40
+    # print(solve(f-1/2*sqrt(m*g/x),x))
+
+    l=1
+    copperLinearCo = 17 / 10 ** 6
+    print(f*(1/sqrt(copperLinearCo*40+1)-1))
+    print(sqrt(copperLinearCo*40+1))
+
+    l1=l+l*copperLinearCo*dT
+
+    mu1=m/l1
+# char178()
+
+
+def char177():
+    stephanBoldzman=5.67/10**8
+    T=2450
+    e=0.35
+    H=100
+    A=H/e/T**4/stephanBoldzman
+    print(A)
+# char177()
+def char176():
+    l1=1
+    A=4/10**4
+    T=65
+    print(solve((y-Kcopper*A*(100-65)/l1,y-Ksteel*A*(T)/x),x,y))
+# char176()
+def char175():
+    dT=100
+    l=0.45
+    tgradiet=dT/l
+    print(tgradiet)
+    Kcopper=385
+    A=1.25/10**4
+    H=Kcopper*dT/l*A
+    print(Kcopper*dT/l*A)
+    dT1=0.12*H/Kcopper/A
+    print(100-dT1)
+# char175()
+
+def char174():
+    m=0.26
+    dT=17
+    Q=dT*m*waterHeatCapacity+m*waterHeatOffusion
+    print(Q)
+    print(Q/waterHeatCapacity)
+    print(Q/1055)
+# char174()
+
+def char173():
+    m=24000
+    v=12.5
+    a=65
+    b=20
+    h=12
+    p=1.2
+    CH=1020
+    V=a*b*h
+    E=v**2/2*m
+    m_air=V*p
+    dC=E/CH/m_air
+    print(dC)
+# char173()
+def char1723():
+    l=1.5
+    print(solve((x*(420-20)*l-0.19),x))
+    y=2*10**11
+    a=3.2/10**5
+    stress=y*a*400
+    print(stress)
+# char1723()
+def char172():
+    B=5.1/10**5
+    print(solve((B*(x-20)-0.0015),x))
+# char172()
+def char171():
+    d=4.5/10**3
+    a=2.4/10**5
+    print(d+a*d*(23+78))
+# char171()
+def lab1():
+    d= 2.37/10**3
+    dd=0.01/10**3
+    l=[0.823,0.80,0.83,0.827,0.845,0.805,0.969,0.84,0.826]
+    l1=[0.827,0.805,0.826]
+    angle1=[55,66,35]
+    delta_T1=[76,75,75]
+    angle=[50,5,48,55,10,66,37.5,32,35]
+    dl=0.01
+    T0=[22,100]
+    delta_T=[78,74,74,76,74,76,76,76,76,76]
+    dT=2
+    dangle=2
+    a_theory=[19/10**6,24/10**6,13/10**6]
+    percentage=[]
+    a_ex=[]
+    da=[]
+    for x in range(len(l1)):
+        a_ex.append(d/2*radians(angle1[x])/l1[x]/delta_T1[x])
+        # a_theory.append(pi/360/l1[x]/delta_T1[x]*angle1[x]*d)
+        da.append(a_ex[x]*(dd/d+dangle/angle1[x]+dl/l1[x]+dT*2/delta_T1[x]))
+        percentage.append(abs(a_theory[x]-a_ex[x])/a_theory[x])
+
+    for x in range(len(l1)):
+        print(a_ex[x]-da[x],a_ex[x],a_ex[x]+da[x],a_theory[x])
+    print(a_ex,a_theory)
+    print(da,percentage)
+
+# lab1()
+
+
 
 def char1744():
     m0=0.2
@@ -29,7 +274,7 @@ def char1744():
     c_ice=2108
     L=3.34*10**5
     print(solve((40*c_ice*m0+m0*L+20*c_water*m0-60*x*c_water),x))
-char1744()
+# char1744()
 def lab2():
     f1=427
     df1=f1*0.005
